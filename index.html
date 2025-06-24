@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高橋 実来 - Miku Takahashi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #090a0f;
+            --surface-color: #1e1e1e;
+            --primary-color: #bb86fc;
+            --secondary-color: #03dac6;
+            --text-color: #e0e0e0;
+            --text-color-secondary: #a0a0a0;
+            --border-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* --- ヘッダー & ヒーローセクション --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.5)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M12.5 0 L12.5 100 M37.5 0 L37.5 100 M62.5 0 L62.5 100 M87.5 0 L87.5 100 M0 12.5 L100 12.5 M0 37.5 L100 37.5 M0 62.5 L100 62.5 M0 87.5 L100 87.5" stroke-width="0.5" stroke="rgba(255,255,255,0.05)"/></svg>');
+            animation: moveGrid 60s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes moveGrid {
+            from { background-position: 0 0; }
+            to { background-position: 1000px 1000px; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h2 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            color: var(--text-color-secondary);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-color);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            animation: bounce 2s infinite;
+        }
+        .scroll-down::after {
+            content: '↓';
+            display: block;
+            margin-top: 5px;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+            40% { transform: translate(-50%, -10px); }
+            60% { transform: translate(-50%, -5px); }
+        }
+
+        /* --- セクション共通スタイル --- */
+        .section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- アニメーション --- */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Aboutセクション --- */
+        #about p {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .philosophy {
+            margin-top: 40px;
+            background-color: var(--surface-color);
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .philosophy strong {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        /* --- 知識タワー (タイムライン) --- */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--border-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            z-index: 0;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .timeline-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item.left {
+            left: 0;
+        }
+
+        .timeline-item.right {
+            left: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -12px;
+            background-color: var(--bg-color);
+            border: 4px solid var(--primary-color);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover::after {
+            transform: scale(1.2);
+            background-color: var(--primary-color);
+        }
+
+        .timeline-item.right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: var(--surface-color);
+            position: relative;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .timeline-item:hover .timeline-content {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-content .year {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .timeline-content p {
+            font-size: 0.95rem;
+            color: var(--text-color-secondary);
+        }
+        
+        .timeline-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .timeline-content li {
+            font-size: 0.9rem;
+            color: var(--text-color-secondary);
+            margin-bottom: 5px;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .timeline-content li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-size: 0.7rem;
+            top: 4px;
+        }
+
+        /* --- プロジェクトセクション --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .project-card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .project-card p {
+            color: var(--text-color-secondary);
+            font-size: 0.9rem;
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tag {
+            background-color: rgba(3, 218, 198, 0.1);
+            color: var(--secondary-color);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* --- スキル & 資格セクション --- */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .skill-item {
+            background-color: var(--surface-color);
+            color: var(--text-color);
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .skill-item:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(187, 134, 252, 0.3);
+        }
+
+        /* --- フッター --- */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--bg-color);
+        }
+        
+        footer p {
+            color: var(--text-color-secondary);
+        }
+        
+        footer .future-goal {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+
+        /* ▼▼▼ 修正点2: コンタクトボタンのスタイルを追加 ▼▼▼ */
+        .contact-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            margin-bottom: 30px; /* ボタンとコピーライトの間の余白 */
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(187, 134, 252, 0.3);
+        }
+        /* ▲▲▲ 修正点2 ▲▲▲ */
+
+
+        /* --- レスポンシブ対応 --- */
+        @media screen and (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero h2 {
+                font-size: 1.3rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .timeline::after {
+                left: 20px;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-left: 60px;
+                padding-right: 10px;
+            }
+            .timeline-item.left, .timeline-item.right {
+                left: 0;
+            }
+            .timeline-item::after {
+                left: 10px;
+            }
+            .timeline-item.right::after {
+                left: 10px;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>高橋 実来 - Miku Takahashi</h1>
+            <p>「知識」は時に自身と周囲を守る防具に、また時に凶器となる。<br>正しい情報かを瞬時に判別し効果的に発信する能力で、人々を守る真の「情報人材」になることを目指して。</p>
+        </div>
+        <div class="scroll-down">SCROLL!!!</div>
+    </header>
+
+    <main>
+        <section id="about" class="section">
+            <div class="container fade-in-section">
+                <h2 class="section-title">私について</h2>
+                <p>
+                    東日本大震災の体験を原点に、幼い頃から防災や減災、そして物事の仕組みを探求することに情熱を注いできました。ドライバーを手に機械を分解し、コードを書いて世界を構築する。その根底にあるのは、常に「なぜ」「どうして」と問い続け、自身の知識で人々の生活を平和に、そして豊かにしたいという強い想いです。
+                </p>
+                <div class="philosophy">
+                    <p><strong>ポリシー:</strong> 「知識と技術を用いて人々の生活を平和にそして豊かにする」<br>この信念を活動の基礎に組み込み、社会が直面する課題に挑戦し続けています。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- タイムラインセクション 更新 -->
+        <section id="timeline" class="section">
+            <div class="container">
+                <h2 class="section-title">私の生き様について</h2>
+                <div class="timeline">
+                    <div class="timeline-item left fade-in-section">
+                        <div class="timeline-content">
+                            <div class="year">2012 - 2020</div>
+                            <h3>探求心の萌芽 (小・中学校時代)</h3>
+                            <p>東日本大震災を機に防災意識に目覚める。Minecraftサーバー構築・運営を通じて、プログラミングとコミュニティ形成の面白さにのめり込む。</p>
+                            <ul>
+                                <li>小学校 入学・卒業</li>
+                                <li>学級委員長や図書委員長などを務める</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item right fade-in-section">
+                        <div class="timeline-content">
+                            <div class="year">2021</div>
+                            <h3>技術と社会実装への挑戦</h3>
+                            <p>高校入学と同時に多方面で活動を開始。社会課題解決に向けた技術開発とビジネスへの関心を深める。</p>
+                            <ul>
+                                <li>SSH指定中高一貫校に入学 (科学部物理班化学部門研究統括リーダー)</li>
+                                <li>(株)GIRON アプリケーションエンジニア</li>
+                                <li>静岡県ジュニアプログラミングコンテスト 優秀賞</li>
+                                <li>SIerロボットアイデア甲子園 全国大会優秀賞</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item left fade-in-section">
+                        <div class="timeline-content">
+                            <div class="year">2022</div>
+                            <h3>異能の開花と発信</h3>
+                            <p>NICTや総務省のプログラムに選出され、自身のアイデアと技術が公に評価される。伝える力も磨く。</p>
+                             <ul>
+                                <li>SecHack365 受講生合格認定</li>
+                                <li>総務省 異能Vationアワード ノミネート</li>
+                                <li>静岡県児童生徒研究発表会 受賞</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item right fade-in-section">
+                        <div class="timeline-content">
+                            <div class="year">2023</div>
+                            <h3>教育者としての一歩</h3>
+                            <p>SecHack365を修了し、その実績から非常勤講師に就任。UI/UXや表現技法に関する講義を行い、後進の育成に携わる。国際的な舞台でも実力を示す。</p>
+                            <ul>
+                                <li>SecHack365 修了 & 非常勤講師</li>
+                                <li>台湾国家実験研究院CTF 入賞</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item left fade-in-section">
+                        <div class="timeline-content">
+                            <div class="year">2024 - Now</div>
+                            <h3>新たな挑戦と学び</h3>
+                            <p>大学進学後も歩みを止めず、AKATSUKIプロジェクトや企業での実務を通じて、理論と実践を往還する日々。</p>
+                            <ul>
+                                <li>山口大学 非常勤職員 (AKATSUKIプロジェクト)</li>
+                                <li>Starbucks Coffee バリスタ</li>
+                                <li>GMO 学生エンジニアとして勤務</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div class="timeline-item right fade-in-section">
+                        <div class="timeline-content">
+                            <div class="year">これから</div>
+                            <h3>未来への飛躍</h3>
+                            <p>より高度な専門知識を求め、新たな学問の府へ。知識情報・図書館学の領域で、情報と社会の関わりを深く探求する。</p>
+                            <ul>
+                                <li>筑波大学 情報学群　入学</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="container fade-in-section">
+                <h2 class="section-title">主要プロジェクト</h2>
+                <div class="projects-grid">
+                    <div class="project-card fade-in-section">
+                        <div class="project-card-content">
+                            <h3>オープンソース電子カルテシステム</h3>
+                            <p>医療インフラが脆弱な地域でも利用可能な電子カルテシステムを開発。発展途上国の無医村地域で試験導入を開始し、医療情報の格差是正を目指す。</p>
+                            <div class="tags">
+                                <span class="tag">Java</span>
+                                <span class="tag">MySQL</span>
+                                <span class="tag">AWS</span>
+                                <span class="tag">医療DX</span>
+                                <span class="tag">国際協力</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card fade-in-section">
+                        <div class="project-card-content">
+                            <h3>静岡県新型コロナ対策「シズスマ」</h3>
+                            <p>コロナ禍の初動期に、行政より早く情報発信プラットフォームを構築。アプリとSNSを連携させ、地域の情報格差を埋め、多くの県民に安心を届けた。</p>
+                            <div class="tags">
+                                <span class="tag">WordPress</span>
+                                <span class="tag">Firebase</span>
+                                <span class="tag">Android<br>Java/Kotlin/Swift(Dart)</span>
+                                <span class="tag">社会貢献</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card fade-in-section">
+                        <div class="project-card-content">
+                            <h3>自動運転システム「openpilot」最適化プロジェクト</h3>
+                            <p>comma,ai社のオープンソースプロジェクトに参加。日本の複雑な道路環境（左側通行、急カーブ等）に対応するためのソフトウェア最適化に貢献。</p>
+                            <div class="tags">
+                                <span class="tag">Java</span>
+                                <span class="tag">OpenCV</span>
+                                <span class="tag">自動運転</span>
+                                <span class="tag">OSS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <div class="container fade-in-section">
+                <h2 class="section-title">スキルセット</h2>
+                <div class="skills-container">
+                    <span class="skill-item">Java</span>
+                    <span class="skill-item">Python</span>
+                    <span class="skill-item">PHP</span>
+                    <span class="skill-item">C#</span>
+                    <span class="skill-item">JavaScript</span>
+                    <span class="skill-item">HTML/CSS</span>
+                    <span class="skill-item">Android開発</span>
+                    <span class="skill-item">AWS</span>
+                    <span class="skill-item">Firebase</span>
+                    <span class="skill-item">Docker</span>
+                    <span class="skill-item">OpenCV</span>
+                    <span class="skill-item">Figma</span>
+                    <span class="skill-item">Adobe Premiere Pro</span>
+                    <span class="skill-item">課題発見・定義</span>
+                    <span class="skill-item">プロジェクト管理</span>
+                    <span class="skill-item">プレゼンテーション</span>
+                    <span class="skill-item">チームビルディング</span>
+                    <span class="skill-item">防災士</span>
+                    <span class="skill-item">総務省・NICT指定サイバーセキュリティイノベーター</span>
+                    <span class="skill-item">日本化粧品検定三級</span>
+                    <span class="skill-item">化粧品成分検定三級</span>
+                    <span class="skill-item">色彩士検定四級</span>
+                    <span class="skill-item">実用マナー検定準三級</span>
+                    <span class="skill-item">日本フェムテック協会認定資格</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="future-goal">
+                誰もが正しい情報にアクセス、安全な社会の実現を目指して。
+            </p>
+            <a href="mailto:shizusuma@gmail.com" class="contact-btn">CONTACT</a>
+            <p>© 2025 Miku Takahashi. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedItems = document.querySelectorAll('.fade-in-section, .timeline-item');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            animatedItems.forEach(item => {
+                observer.observe(item);
+            });
+        });
+    </script>
+
+</body>
+</html>
