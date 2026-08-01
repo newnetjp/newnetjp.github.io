@@ -1,1326 +1,676 @@
 <!DOCTYPE html>
-<html lang="ja" data-theme="dark">
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高橋 実来 | Miku Takahashi</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+JP:wght@300;400;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-    <style>
-        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-
-        :root {
-            --c-bg: #06070b;
-            --c-bg2: #0c0d14;
-            --c-surface: #111219;
-            --c-surface2: #16171f;
-            --c-border: #1f2029;
-            --c-border-light: #2a2b38;
-            --c-text: #c8c9d2;
-            --c-text-dim: #717286;
-            --c-text-faint: #4a4b5c;
-            --c-accent: #6e56cf;
-            --c-accent2: #7c66dc;
-            --c-mint: #3dd6c8;
-            --c-mint-dim: #2aa89d;
-            --c-rose: #e5484d;
-            --c-amber: #f0c000;
-            --c-nav-bg: rgba(6,7,11,0.7);
-            --c-nav-bg-scroll: rgba(6,7,11,0.92);
-            --c-hero-name: #fff;
-            --c-white: #fff;
-            --font-sans: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
-            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-            --grid-unit: 8px;
-        }
-
-        [data-theme="light"] {
-            --c-bg: #f4f4f7;
-            --c-bg2: #eaeaef;
-            --c-surface: #ffffff;
-            --c-surface2: #f0f0f5;
-            --c-border: #d8d8e0;
-            --c-border-light: #c0c0cc;
-            --c-text: #2a2a3a;
-            --c-text-dim: #5c5c72;
-            --c-text-faint: #8888a0;
-            --c-accent: #6e56cf;
-            --c-accent2: #5b3fbf;
-            --c-mint: #1a9e94;
-            --c-mint-dim: #158078;
-            --c-rose: #d03035;
-            --c-amber: #c09500;
-            --c-nav-bg: rgba(244,244,247,0.75);
-            --c-nav-bg-scroll: rgba(244,244,247,0.95);
-            --c-hero-name: #1a1a2e;
-            --c-white: #1a1a2e;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--font-sans);
-            background: var(--c-bg);
-            color: var(--c-text);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
-            transition: background 0.4s, color 0.4s;
-        }
-
-        ::selection {
-            background: var(--c-accent);
-            color: #fff;
-        }
-
-        a { color: inherit; text-decoration: none; }
-
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 0 clamp(20px, 4vw, 48px);
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--c-nav-bg);
-            backdrop-filter: blur(20px) saturate(1.4);
-            -webkit-backdrop-filter: blur(20px) saturate(1.4);
-            border-bottom: 1px solid rgba(128,128,128,0.08);
-            transition: background 0.3s;
-        }
-
-        .nav-logo {
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            color: var(--c-white);
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-size: 12px;
-            font-weight: 400;
-            letter-spacing: 1.5px;
-            color: var(--c-text-dim);
-            transition: color 0.2s;
-            text-transform: uppercase;
-        }
-
-        .nav-links a:hover { color: var(--c-white); }
-
-        .theme-toggle {
-            width: 36px;
-            height: 36px;
-            border: 1px solid var(--c-border);
-            border-radius: 8px;
-            background: var(--c-surface);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: border-color 0.2s, background 0.2s, transform 0.2s;
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .theme-toggle:hover {
-            border-color: var(--c-accent);
-            transform: scale(1.05);
-        }
-
-        .theme-toggle svg {
-            width: 16px;
-            height: 16px;
-            fill: none;
-            stroke: var(--c-text);
-            stroke-width: 1.8;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: stroke 0.2s, transform 0.4s;
-        }
-
-        .theme-toggle .icon-sun { display: none; }
-        .theme-toggle .icon-moon { display: block; }
-        [data-theme="light"] .theme-toggle .icon-sun { display: block; }
-        [data-theme="light"] .theme-toggle .icon-moon { display: none; }
-
-        .hero {
-            position: relative;
-            min-height: 100svh;
-            display: flex;
-            align-items: flex-end;
-            padding: 0 clamp(24px, 6vw, 80px);
-            padding-bottom: clamp(60px, 10vh, 120px);
-            overflow: hidden;
-        }
-
-        @media (max-width: 800px) {
-            .hero {
-                align-items: flex-end;
-                padding-bottom: 28px;
-                justify-content: flex-start;
-            }
-            .hero-content {
-                padding-bottom: 0;
-            }
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-        }
-
-        .hero-bg canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .hero-gradient {
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 60% 50% at 20% 50%, rgba(110,86,207,0.08) 0%, transparent 70%),
-                radial-gradient(ellipse 40% 60% at 80% 30%, rgba(61,214,200,0.05) 0%, transparent 60%),
-                linear-gradient(to top, var(--c-bg) 0%, transparent 40%);
-            z-index: 1;
-            transition: background 0.4s;
-        }
-
-        [data-theme="light"] .hero-gradient {
-            background:
-                radial-gradient(ellipse 60% 50% at 20% 50%, rgba(110,86,207,0.06) 0%, transparent 70%),
-                radial-gradient(ellipse 40% 60% at 80% 30%, rgba(61,214,200,0.04) 0%, transparent 60%),
-                linear-gradient(to top, var(--c-bg) 0%, transparent 40%);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 680px;
-        }
-
-        .hero-label {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            letter-spacing: 3px;
-            color: var(--c-mint);
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: riseIn 1s var(--ease-out-expo) 0.2s forwards;
-        }
-
-        .hero-name {
-            font-size: clamp(2.8rem, 6vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -1px;
-            color: var(--c-hero-name);
-            margin-bottom: 24px;
-            opacity: 0;
-            animation: riseIn 1s var(--ease-out-expo) 0.35s forwards;
-        }
-
-        .hero-desc {
-            font-size: clamp(14px, 1.6vw, 16px);
-            color: var(--c-text-dim);
-            line-height: 2;
-            max-width: 520px;
-            opacity: 0;
-            animation: riseIn 1s var(--ease-out-expo) 0.5s forwards;
-        }
-
-        .hero-scroll {
-            position: absolute;
-            bottom: 32px;
-            right: clamp(24px, 6vw, 80px);
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            opacity: 0;
-            animation: riseIn 1s var(--ease-out-expo) 0.8s forwards;
-        }
-
-        .hero-scroll span {
-            font-family: var(--font-mono);
-            font-size: 10px;
-            letter-spacing: 2px;
-            color: var(--c-text-faint);
-            writing-mode: vertical-rl;
-        }
-
-        .hero-scroll-line {
-            width: 1px;
-            height: 48px;
-            background: linear-gradient(to bottom, var(--c-text-faint), transparent);
-            animation: scrollPulse 2.4s ease-in-out infinite;
-        }
-
-        @keyframes scrollPulse {
-            0%,100% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; }
-            50% { opacity: 1; transform: scaleY(1); }
-        }
-
-        @keyframes riseIn {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-tap-hint {
-            display: none;
-            margin-top: 24px;
-            font-family: var(--font-mono);
-            font-size: 10px;
-            letter-spacing: 2px;
-            color: var(--c-text-faint);
-            text-transform: uppercase;
-            opacity: 0;
-            animation: riseIn 1s var(--ease-out-expo) 0.9s forwards, tapPulse 2s ease-in-out 2s infinite;
-        }
-
-        @media (max-width: 800px) {
-            .hero-tap-hint { display: block; }
-        }
-
-        @keyframes tapPulse {
-            0%,100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        .type-line {
-            overflow: hidden;
-            display: block;
-        }
-
-        .type-line .type-char {
-            display: inline-block;
-            opacity: 0;
-            transform: translateY(8px);
-            transition: opacity 0.25s ease, transform 0.25s ease;
-        }
-
-        .type-line .type-char.is-typed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .sect {
-            padding: clamp(64px, 10vw, 120px) clamp(24px, 6vw, 80px);
-        }
-
-        .sect + .sect {
-            border-top: 1px solid var(--c-border);
-        }
-
-        .sect-head {
-            display: flex;
-            align-items: baseline;
-            gap: 16px;
-            margin-bottom: 48px;
-        }
-
-        .sect-num {
-            font-family: var(--font-mono);
-            font-size: 12px;
-            color: var(--c-accent2);
-            letter-spacing: 1px;
-        }
-
-        .sect-title {
-            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-            font-weight: 700;
-            color: var(--c-white);
-            letter-spacing: -0.3px;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            align-items: start;
-        }
-
-        .about-text {
-            font-size: 14px;
-            color: var(--c-text-dim);
-            line-height: 2.1;
-        }
-
-        .about-text p + p { margin-top: 20px; }
-
-        .about-aside {
-            background: var(--c-surface);
-            border: 1px solid var(--c-border);
-            border-radius: 10px;
-            padding: 28px;
-            position: relative;
-            overflow: hidden;
-            transition: background 0.4s, border-color 0.4s;
-        }
-
-        .about-aside::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--c-accent), var(--c-mint));
-        }
-
-        .about-aside-label {
-            font-family: var(--font-mono);
-            font-size: 10px;
-            letter-spacing: 2px;
-            color: var(--c-mint);
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .about-aside p {
-            font-size: 14px;
-            color: var(--c-text);
-            line-height: 1.9;
-        }
-
-        .tl {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .tl-line {
-            position: absolute;
-            left: 23px;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: var(--c-border);
-        }
-
-        .tl-item {
-            position: relative;
-            padding-left: 64px;
-            padding-bottom: 48px;
-            opacity: 0;
-            transform: translateY(32px);
-            transition: opacity 0.65s var(--ease-out-expo), transform 0.65s var(--ease-out-expo);
-        }
-
-        .tl-item.is-vis {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .tl-item:last-child { padding-bottom: 0; }
-
-        .tl-dot {
-            position: absolute;
-            left: 16px;
-            top: 6px;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            border: 2px solid var(--c-border-light);
-            background: var(--c-bg);
-            transition: border-color 0.3s, background 0.3s;
-            z-index: 1;
-        }
-
-        .tl-item:hover .tl-dot {
-            border-color: var(--c-accent);
-            background: var(--c-accent);
-        }
-
-        .tl-year {
-            font-family: var(--font-mono);
-            font-size: 12px;
-            color: var(--c-mint);
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-        }
-
-        .tl-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--c-white);
-            margin-bottom: 8px;
-        }
-
-        .tl-desc {
-            font-size: 13px;
-            color: var(--c-text-dim);
-            line-height: 1.9;
-            margin-bottom: 10px;
-        }
-
-        .tl-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .tl-tag {
-            font-size: 11px;
-            color: var(--c-text-faint);
-            padding: 3px 10px;
-            border: 1px solid var(--c-border);
-            border-radius: 3px;
-            transition: color 0.2s, border-color 0.2s;
-        }
-
-        .tl-item:hover .tl-tag {
-            color: var(--c-text-dim);
-            border-color: var(--c-border-light);
-        }
-
-        .proj-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .proj {
-            display: grid;
-            grid-template-columns: 200px 1fr auto;
-            align-items: start;
-            gap: 24px;
-            padding: 28px;
-            background: var(--c-surface);
-            border: 1px solid var(--c-border);
-            border-radius: 10px;
-            transition: border-color 0.3s, transform 0.25s var(--ease-out-expo), background 0.4s;
-            opacity: 0;
-            transform: translateY(28px);
-        }
-
-        .proj.is-vis {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo), border-color 0.3s, background 0.4s;
-        }
-
-        .proj:hover {
-            border-color: var(--c-border-light);
-            transform: translateY(-2px);
-        }
-
-        .proj-name {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--c-white);
-            line-height: 1.5;
-        }
-
-        .proj-desc {
-            font-size: 13px;
-            color: var(--c-text-dim);
-            line-height: 1.9;
-        }
-
-        .proj-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            align-items: flex-end;
-        }
-
-        .proj-stack span {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--c-text-faint);
-            white-space: nowrap;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .skill-group h4 {
-            font-size: 11px;
-            font-weight: 400;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--c-text-faint);
-            margin-bottom: 16px;
-            font-family: var(--font-mono);
-        }
-
-        .skill-group ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .skill-group li {
-            font-size: 13px;
-            color: var(--c-text-dim);
-            padding: 8px 14px;
-            background: var(--c-surface);
-            border: 1px solid var(--c-border);
-            border-radius: 5px;
-            transition: color 0.2s, border-color 0.2s, background 0.4s;
-        }
-
-        .skill-group li:hover {
-            color: var(--c-text);
-            border-color: var(--c-border-light);
-        }
-
-        .game-sect {
-            padding: clamp(64px, 10vw, 120px) clamp(24px, 6vw, 80px);
-            border-top: 1px solid var(--c-border);
-        }
-
-        .game-container {
-            max-width: 480px;
-            margin: 0 auto;
-        }
-
-        .game-canvas-wrap {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 4/5;
-            background: var(--c-surface);
-            border: 1px solid var(--c-border);
-            border-radius: 10px;
-            overflow: hidden;
-            touch-action: none;
-            cursor: pointer;
-            transition: background 0.4s, border-color 0.4s;
-        }
-
-        .game-canvas-wrap canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .game-hud {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 16px;
-        }
-
-        .game-score {
-            font-family: var(--font-mono);
-            font-size: 14px;
-            color: var(--c-mint);
-            letter-spacing: 1px;
-        }
-
-        .game-btn {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 8px 20px;
-            border: 1px solid var(--c-border-light);
-            border-radius: 4px;
-            background: transparent;
-            color: var(--c-text);
-            cursor: pointer;
-            transition: border-color 0.2s, color 0.2s;
-        }
-
-        .game-btn:hover {
-            border-color: var(--c-accent);
-            color: var(--c-white);
-        }
-
-        .game-info {
-            margin-top: 16px;
-            font-size: 12px;
-            color: var(--c-text-faint);
-            text-align: center;
-            line-height: 1.8;
-        }
-
-        .foot {
-            padding: 48px clamp(24px, 6vw, 80px);
-            border-top: 1px solid var(--c-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .foot-msg {
-            font-size: 13px;
-            color: var(--c-text-dim);
-            line-height: 1.9;
-        }
-
-        .foot-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 12px;
-        }
-
-        .foot-contact {
-            font-family: var(--font-mono);
-            font-size: 12px;
-            letter-spacing: 2px;
-            padding: 10px 24px;
-            border: 1px solid var(--c-border-light);
-            border-radius: 4px;
-            color: var(--c-text);
-            transition: border-color 0.2s, color 0.2s;
-        }
-
-        .foot-contact:hover {
-            border-color: var(--c-accent);
-            color: var(--c-white);
-        }
-
-        .foot-copy {
-            font-size: 11px;
-            color: var(--c-text-faint);
-        }
-
-        @media (max-width: 800px) {
-            .nav-links { display: none; }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-
-            .proj {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .proj-stack {
-                flex-direction: row;
-                flex-wrap: wrap;
-                align-items: flex-start;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-
-            .foot {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 24px;
-            }
-
-            .foot-right { align-items: flex-start; }
-
-            .hero-scroll { display: none; }
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
-        }
-        .reveal.is-vis {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高橋 実来（Miku Takahashi）｜情報学・セキュリティ</title>
+<meta name="description" content="筑波大学 情報学群 高橋実来の公式情報ページ。プロフィール、経歴、主な取組・実績、技術および資格を掲載しています。">
+<style>
+/* ============================================================
+   基本設定 / デザイントークン
+   方針：装飾・グラデーション・影・角丸・縦罫を使用しない。
+         情報の区切りは横罫・面・余白のみで表現する。
+   ============================================================ */
+:root{
+  --navy:        #16336B; /* 基調色（濃紺） */
+  --navy-dark:   #0F2450; /* 濃紺（濃） */
+  --navy-pale:   #EDF0F5; /* 濃紺の淡色面 */
+  --link:        #1A4B8C;
+  --link-visited:#5B3A82;
+  --text:        #1A1A1A;
+  --text-sub:    #4A4A4A;
+  --border:      #AEB4BC;
+  --border-firm: #8C9199;
+  --bg:          #FFFFFF;
+  --bg-subtle:   #F4F5F7;
+  --focus:       #B34700;
+  --base-size:   16px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{
+  font-size: var(--base-size);
+  -webkit-text-size-adjust:100%;
+  scroll-behavior:auto;
+  scroll-padding-top:1rem;
+}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic Medium","Yu Gothic","Meiryo","Noto Sans JP",sans-serif;
+  font-size:1rem;
+  line-height:1.8;
+  font-feature-settings:"palt" 0;
+}
+img{ max-width:100%; height:auto; }
+a{ color:var(--link); text-underline-offset:2px; }
+a:visited{ color:var(--link-visited); }
+a:hover{ text-decoration:none; }
+a:focus-visible,
+button:focus-visible{
+  outline:3px solid var(--focus);
+  outline-offset:2px;
+}
+:target{ scroll-margin-top:1rem; }
+
+/* レイアウト幅 */
+.l-inner{
+  width:100%;
+  max-width:1120px;
+  margin-inline:auto;
+  padding-inline:1rem;
+}
+
+/* ============================================================
+   スキップリンク
+   ============================================================ */
+.p-skip{
+  position:absolute; left:0; top:0;
+  transform:translateY(-200%);
+  background:var(--navy); color:#fff;
+  padding:.6rem 1rem; z-index:100;
+  text-decoration:underline;
+}
+.p-skip:focus{ transform:translateY(0); }
+
+/* ============================================================
+   ユーティリティバー
+   ============================================================ */
+.l-utility{
+  background:var(--bg-subtle);
+  border-bottom:1px solid var(--border);
+  font-size:.8125rem;
+}
+.l-utility .l-inner{
+  display:flex; flex-wrap:wrap; gap:.5rem 1.25rem;
+  align-items:center; justify-content:flex-end;
+  min-height:2.5rem; padding-block:.35rem;
+}
+.p-utility__label{ color:var(--text-sub); }
+.p-utility__group{ display:flex; align-items:center; gap:.35rem; }
+.p-utility__btn{
+  font:inherit; line-height:1.4;
+  background:#fff; color:var(--text);
+  border:1px solid var(--border-firm);
+  padding:.15rem .6rem; cursor:pointer;
+}
+.p-utility__btn[aria-pressed="true"]{
+  background:var(--navy); color:#fff; border-color:var(--navy);
+}
+
+/* ============================================================
+   ヘッダー
+   ============================================================ */
+.l-header{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+}
+.l-header .l-inner{
+  display:flex; flex-wrap:wrap; align-items:center;
+  justify-content:space-between; gap:.75rem;
+  padding-block:1.1rem;
+}
+.p-sitename{ margin:0; }
+.p-sitename__text{ display:block; }
+.p-sitename__ja{
+  display:block; font-size:1.375rem; font-weight:700;
+  line-height:1.4; letter-spacing:.02em;
+}
+.p-sitename__en{
+  display:block; font-size:.8125rem; font-weight:400;
+  color:var(--text-sub); line-height:1.5;
+}
+.p-header__meta{
+  margin:0;
+  font-size:.8125rem; color:var(--text-sub);
+  text-align:left; line-height:1.7;
+}
+@media (min-width:768px){
+  .p-header__meta{ text-align:right; }
+}
+
+/* ============================================================
+   グローバルナビゲーション
+   ============================================================ */
+.l-gnav{ background:var(--navy); }
+.l-gnav ul{
+  list-style:none; margin:0; padding:0;
+  display:flex; flex-wrap:wrap;
+}
+.l-gnav li{ flex:1 1 auto; }
+.l-gnav a{
+  display:block; padding:.85rem .9rem;
+  color:#fff; text-decoration:none;
+  font-size:.9375rem; font-weight:700;
+  text-align:center;
+}
+.l-gnav a:hover{ background:var(--navy-dark); text-decoration:underline; }
+
+/* ============================================================
+   パンくず
+   ============================================================ */
+.p-breadcrumb{
+  font-size:.8125rem; color:var(--text-sub);
+  border-bottom:1px solid var(--border);
+  background:#fff;
+}
+.p-breadcrumb ol{
+  list-style:none; margin:0; padding:.6rem 0;
+  display:flex; flex-wrap:wrap; gap:.35rem;
+}
+.p-breadcrumb li + li::before{ content:"＞"; margin-right:.35rem; }
+
+/* ============================================================
+   本文レイアウト（2カラム）
+   ============================================================ */
+.l-body{ padding-block:2rem 3rem; }
+.l-columns{ display:block; }
+@media (min-width:960px){
+  .l-columns{
+    display:grid;
+    grid-template-columns:15rem 1fr;
+    gap:2.5rem;
+    align-items:start;
+  }
+}
+
+/* ページ見出し */
+.p-pagetitle{
+  margin:0 0 1.5rem;
+  padding:0 0 .75rem;
+  border-bottom:3px solid var(--navy);
+  font-size:1.75rem; line-height:1.4; font-weight:700;
+}
+.p-lead{
+  margin:0 0 2rem;
+  font-size:1rem; color:var(--text);
+}
+
+/* ローカルナビ（サイドバー） */
+.p-localnav{ margin-bottom:2rem; }
+.p-localnav__head{
+  margin:0; padding:.6rem .8rem;
+  background:var(--navy); color:#fff;
+  font-size:.9375rem; font-weight:700;
+}
+.p-localnav ul{
+  list-style:none; margin:0; padding:0;
+  border-bottom:1px solid var(--border-firm);
+}
+.p-localnav li + li{ border-top:1px solid var(--border); }
+.p-localnav a{
+  display:block; padding:.65rem .8rem;
+  color:var(--text); text-decoration:none;
+  font-size:.875rem;
+}
+.p-localnav a:hover{ text-decoration:underline; }
+@media (min-width:960px){
+  .p-localnav{ position:sticky; top:1rem; }
+}
+
+/* 見出し */
+.p-section{ margin-bottom:3rem; }
+.p-section:last-child{ margin-bottom:0; }
+.p-h2{
+  margin:0 0 1.25rem;
+  padding:.55rem .8rem;
+  background:var(--navy-pale);
+  border-bottom:2px solid var(--navy);
+  font-size:1.25rem; font-weight:700; line-height:1.5;
+}
+.p-h3{
+  margin:2rem 0 .75rem;
+  padding-bottom:.35rem;
+  border-bottom:2px solid var(--border-firm);
+  font-size:1.0625rem; font-weight:700; line-height:1.6;
+}
+.p-section p{ margin:0 0 1rem; }
+.p-section p:last-child{ margin-bottom:0; }
+
+/* 注記ボックス（基本方針など） */
+.p-notice{
+  border-top:3px solid var(--navy);
+  border-bottom:1px solid var(--border-firm);
+  padding:1.25rem 0;
+  margin:0 0 2rem;
+}
+.p-notice__title{
+  margin:0 0 .5rem;
+  font-size:1rem; font-weight:700; color:var(--navy-dark);
+}
+.p-notice p{ margin:0; }
+
+/* 定義表 */
+.p-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.9375rem;
+  border-top:1px solid var(--border-firm);
+}
+.p-table th,
+.p-table td{
+  border-bottom:1px solid var(--border);
+  padding:.85rem 1rem;
+  text-align:left;
+  vertical-align:top;
+  line-height:1.75;
+}
+.p-table th{
+  background:var(--bg-subtle);
+  font-weight:700;
+  white-space:nowrap;
+}
+.p-table--year th{ width:11rem; }
+@media (max-width:640px){
+  .p-table th,
+  .p-table td{ display:block; width:auto; white-space:normal; }
+  .p-table th{ border-bottom:none; padding-bottom:.4rem; }
+  .p-table td{ padding-top:.5rem; }
+}
+
+/* 箇条書き */
+.p-list{ margin:.5rem 0 0; padding-left:1.25rem; }
+.p-list li{ margin-bottom:.25rem; }
+.p-list li:last-child{ margin-bottom:0; }
+
+/* 実績項目（上下罫のみ） */
+.p-item{
+  border-top:1px solid var(--border);
+  padding:1.25rem 0;
+  margin:0;
+}
+.p-item:last-child{ border-bottom:1px solid var(--border); }
+.p-item__title{
+  margin:0 0 .5rem;
+  font-size:1.0625rem; font-weight:700; line-height:1.6;
+}
+.p-item__body{ margin:0; }
+.p-item__meta{
+  margin:.9rem 0 0;
+  font-size:.8125rem; color:var(--text-sub);
+}
+.p-item__meta dt{ float:left; font-weight:700; margin-right:.5rem; }
+.p-item__meta dd{ margin:0; }
+
+/* 問い合わせ */
+.p-contact{
+  border-top:1px solid var(--border-firm);
+  border-bottom:1px solid var(--border-firm);
+  padding:1.25rem 0;
+}
+.p-contact dl{ margin:0; }
+.p-contact dt{ font-weight:700; margin-bottom:.15rem; }
+.p-contact dd{ margin:0 0 .9rem; }
+.p-contact dd:last-child{ margin-bottom:0; }
+
+/* 更新日 */
+.p-updated{
+  margin:2.5rem 0 0; padding-top:.75rem;
+  border-top:1px solid var(--border);
+  font-size:.8125rem; color:var(--text-sub); text-align:right;
+}
+
+/* ページ上部へ */
+.p-pagetop{ border-top:1px solid var(--border); background:#fff; }
+.p-pagetop .l-inner{ text-align:right; padding-block:.75rem; }
+.p-pagetop a{ font-size:.875rem; }
+
+/* ============================================================
+   フッター
+   ============================================================ */
+.l-footer{
+  background:var(--navy);
+  color:#fff;
+}
+.l-footer a{ color:#fff; }
+.l-footer a:visited{ color:#fff; }
+.l-footer .l-inner{ padding-block:2rem; }
+.p-footer__grid{ display:block; }
+@media (min-width:768px){
+  .p-footer__grid{ display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+}
+.p-footer__name{ margin:0 0 .5rem; font-size:1.0625rem; font-weight:700; }
+.p-footer__addr{ margin:0; font-style:normal; font-size:.875rem; line-height:1.9; }
+.p-footer__links{
+  list-style:none; margin:1.5rem 0 0; padding:0;
+  font-size:.875rem;
+}
+@media (min-width:768px){ .p-footer__links{ margin-top:0; } }
+.p-footer__links li{ border-top:1px solid #3D578E; }
+.p-footer__links li:last-child{ border-bottom:1px solid #3D578E; }
+.p-footer__links a{ display:block; padding:.55rem 0; text-decoration:none; }
+.p-footer__links a:hover{ text-decoration:underline; }
+.p-copyright{
+  color:#fff;
+  font-size:.8125rem;
+  border-top:1px solid #3D578E;
+}
+.p-copyright .l-inner{ padding-block:.85rem; }
+
+/* 印刷 */
+@media print{
+  .l-utility,.l-gnav,.p-localnav,.p-pagetop,.p-skip{ display:none; }
+  body{ color:#000; }
+  .l-footer,.p-copyright{ background:#fff; color:#000; border-color:#000; }
+  .l-footer a{ color:#000; }
+}
+</style>
 </head>
 <body>
 
-<nav class="nav">
-    <div class="nav-logo">M.T.</div>
-    <div class="nav-right">
-        <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#career">Career</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#game">Game</a></li>
-        </ul>
-        <button class="theme-toggle" id="themeToggle" aria-label="テーマ切替">
-            <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 0 1 11.21 3a7 7 0 1 0 9.79 9.79z"/></svg>
-            <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        </button>
-    </div>
-</nav>
+<a class="p-skip" href="#main">本文へ移動</a>
 
-<header class="hero" id="top">
-    <div class="hero-bg">
-        <canvas id="heroCanvas"></canvas>
+<!-- ユーティリティバー -->
+<div class="l-utility">
+  <div class="l-inner">
+    <span class="p-utility__label" id="fs-label">文字サイズ</span>
+    <div class="p-utility__group" role="group" aria-labelledby="fs-label">
+      <button type="button" class="p-utility__btn" data-fs="m" aria-pressed="true">標準</button>
+      <button type="button" class="p-utility__btn" data-fs="l" aria-pressed="false">大</button>
+      <button type="button" class="p-utility__btn" data-fs="xl" aria-pressed="false">特大</button>
     </div>
-    <div class="hero-gradient"></div>
-    <div class="hero-content">
-        <p class="hero-label">Information &amp; Security</p>
-        <h1 class="hero-name">高橋 実来</h1>
-        <p class="hero-desc" id="heroDesc">
-            「知識」は防具にもなれば凶器にもなる。<br>
-            国のセキュリティ教育を経た人間として、<br>
-            正しい情報をきちんと届けることで<br>
-            人を守れる存在でありたい。
-        </p>
-        <div class="hero-tap-hint" id="heroTapHint">▼ TAP TO REVEAL</div>
-    </div>
-    <div class="hero-scroll">
-        <span>scroll</span>
-        <div class="hero-scroll-line"></div>
-    </div>
+  </div>
+</div>
+
+<!-- ヘッダー -->
+<header class="l-header">
+  <div class="l-inner">
+    <p class="p-sitename">
+      <span class="p-sitename__text">
+        <span class="p-sitename__ja">高橋 実来</span>
+        <span class="p-sitename__en">Miku Takahashi ／ Information &amp; Security</span>
+      </span>
+    </p>
+    <p class="p-header__meta">
+      筑波大学 情報学群<br>
+      知識と技術で、人の暮らしを平和に・豊かにする。
+    </p>
+  </div>
 </header>
 
-<main>
-    <section class="sect" id="about">
-        <div class="sect-head reveal">
-            <span class="sect-num">01</span>
-            <h2 class="sect-title">About</h2>
-        </div>
-        <div class="about-grid">
-            <div class="about-text reveal">
-                <p>
-                    原点は東日本大震災。あの経験から防災や減災、「仕組みを知ること」にずっと関心がある。小さい頃からドライバーで機械を分解して、中学ではMinecraftのサーバーを立てて運営した。コードを書いて何かが動く面白さはそのあたりで知った。
-                </p>
-                <p>
-                    根っこにあるのは「なぜそうなっているのか」を考えたい気持ちと、自分が持っている知識で誰かの暮らしを少しでも安全にしたいという欲求。今は筑波大学で情報学を学びながら、研究と実務を行き来する生活を送っている。
-                </p>
-            </div>
-            <div class="about-aside reveal">
-                <p class="about-aside-label">Policy</p>
-                <p>知識と技術で、人の暮らしを平和に・豊かにする。この方針を自分の活動の基盤にして、社会の課題に取り組んでいる。</p>
-            </div>
-        </div>
-    </section>
+<!-- グローバルナビ -->
+<nav class="l-gnav" aria-label="グローバルナビゲーション">
+  <div class="l-inner" style="padding-inline:0;">
+    <ul>
+      <li><a href="#about">プロフィール</a></li>
+      <li><a href="#career">経歴</a></li>
+      <li><a href="#projects">主な取組・実績</a></li>
+      <li><a href="#skills">技術・資格</a></li>
+      <li><a href="#contact">お問い合わせ</a></li>
+    </ul>
+  </div>
+</nav>
 
-    <section class="sect" id="career">
-        <div class="sect-head reveal">
-            <span class="sect-num">02</span>
-            <h2 class="sect-title">Career</h2>
-        </div>
-        <div class="tl">
-            <div class="tl-line"></div>
+<!-- パンくず -->
+<nav class="p-breadcrumb" aria-label="パンくずリスト">
+  <div class="l-inner">
+    <ol>
+      <li><a href="#">ホーム</a></li>
+      <li aria-current="page">高橋 実来について</li>
+    </ol>
+  </div>
+</nav>
 
-            <div class="tl-item">
-                <div class="tl-dot"></div>
-                <div class="tl-year">2012 – 2020</div>
-                <div class="tl-title">探求心の芽生え</div>
-                <div class="tl-desc">震災をきっかけに防災へ関心を持つ。Minecraftサーバーの構築・運営を通じてプログラミングとコミュニティ運営を覚える。学級委員長や図書委員長も経験。</div>
-            </div>
+<div class="l-body">
+  <div class="l-inner l-columns">
 
-            <div class="tl-item">
-                <div class="tl-dot"></div>
-                <div class="tl-year">2021</div>
-                <div class="tl-title">技術と社会実装</div>
-                <div class="tl-desc">SSH指定中高一貫校に入学し、科学部の研究統括リーダーに。(株)GIRONでアプリケーションエンジニアとして勤務開始。</div>
-                <div class="tl-tags">
-                    <span class="tl-tag">静岡県ジュニアプログラミングコンテスト 優秀賞</span>
-                    <span class="tl-tag">SIerロボットアイデア甲子園 全国大会優秀賞</span>
-                </div>
-            </div>
+    <!-- ローカルナビ -->
+    <nav class="p-localnav" aria-label="このページの内容">
+      <h2 class="p-localnav__head">このページの内容</h2>
+      <ul>
+        <li><a href="#about">1. プロフィール</a></li>
+        <li><a href="#career">2. 経歴</a></li>
+        <li><a href="#projects">3. 主な取組・実績</a></li>
+        <li><a href="#skills">4. 技術・資格</a></li>
+        <li><a href="#contact">5. お問い合わせ</a></li>
+      </ul>
+    </nav>
 
-            <div class="tl-item">
-                <div class="tl-dot"></div>
-                <div class="tl-year">2022</div>
-                <div class="tl-title">外部からの評価</div>
-                <div class="tl-desc">NICTのSecHack365に合格。総務省 異能vationアワードにノミネート。自分のアイデアや技術が外の世界で通用する手応えを得た年。</div>
-                <div class="tl-tags">
-                    <span class="tl-tag">SecHack365 合格認定</span>
-                    <span class="tl-tag">静岡県児童生徒研究発表会 受賞</span>
-                </div>
-            </div>
+    <main id="main">
+      <h1 class="p-pagetitle">高橋 実来について</h1>
 
-            <div class="tl-item">
-                <div class="tl-dot"></div>
-                <div class="tl-year">2023</div>
-                <div class="tl-title">教える側になる</div>
-                <div class="tl-desc">SecHack365修了後、非常勤講師としてUI/UX・表現技法の講義を担当。台湾国家実験研究院CTFでも入賞し、国際的な場での経験を積む。</div>
-                <div class="tl-tags">
-                    <span class="tl-tag">SecHack365 修了・非常勤講師</span>
-                    <span class="tl-tag">台湾CTF 入賞</span>
-                </div>
-            </div>
+      <p class="p-lead">
+        筑波大学 情報学群に在籍し、情報学およびセキュリティを専門としています。
+        本ページでは、プロフィール、経歴、これまでの主な取組・実績、および保有する技術・資格を掲載しています。
+      </p>
 
-            <div class="tl-item">
-                <div class="tl-dot"></div>
-                <div class="tl-year">2024 – 現在</div>
-                <div class="tl-title">大学と実務の往復</div>
-                <div class="tl-desc">筑波大学 情報学群に進学。山口大学のAKATSUKIプロジェクトに非常勤職員として参加しつつ、スターバックスでバリスタとしても働いている。</div>
-            </div>
+      <div class="p-notice">
+        <p class="p-notice__title">基本方針</p>
+        <p>
+          「知識」は防具にもなれば凶器にもなります。国のセキュリティ教育を経た人間として、
+          正しい情報をきちんと届けることで人を守れる存在でありたいと考えています。
+          知識と技術で、人の暮らしを平和に・豊かにする。この方針を活動の基盤としています。
+        </p>
+      </div>
 
-            <div class="tl-item">
-                <div class="tl-dot"></div>
-                <div class="tl-year">これから</div>
-                <div class="tl-title">次のフェーズ</div>
-                <div class="tl-desc">筑波大学附属病院との共同研究に着手。GMOに学生エンジニアとして参画予定。知識情報・図書館学の領域から、情報と社会の関わりをもっと深く掘りたい。</div>
-            </div>
-        </div>
-    </section>
+      <!-- 1. プロフィール -->
+      <section class="p-section" id="about">
+        <h2 class="p-h2">1. プロフィール</h2>
+        <p>
+          原点は東日本大震災です。あの経験から防災や減災、「仕組みを知ること」にずっと関心があります。
+          小さい頃からドライバーで機械を分解し、中学ではMinecraftのサーバーを立てて運営していました。
+          コードを書いて何かが動く面白さは、そのあたりで知りました。
+        </p>
+        <p>
+          根っこにあるのは「なぜそうなっているのか」を考えたい気持ちと、
+          自分が持っている知識で誰かの暮らしを少しでも安全にしたいという欲求です。
+          現在は筑波大学で情報学を学びながら、研究と実務を行き来する生活を送っています。
+        </p>
 
-    <section class="sect" id="projects">
-        <div class="sect-head reveal">
-            <span class="sect-num">03</span>
-            <h2 class="sect-title">Projects</h2>
-        </div>
-        <div class="proj-list">
-            <div class="proj">
-                <div class="proj-name">オープンソース<br>電子カルテシステム</div>
-                <div class="proj-desc">医療インフラが十分でない地域向けの電子カルテ。発展途上国の無医村地域で試験導入を開始している。医療情報の格差をなくすのが目標。</div>
-                <div class="proj-stack">
-                    <span>Java</span>
-                    <span>MySQL</span>
-                    <span>AWS</span>
-                </div>
-            </div>
-            <div class="proj">
-                <div class="proj-name">静岡県コロナ対策<br>「シズスマ」</div>
-                <div class="proj-desc">コロナ禍の初期に、行政より先に情報発信基盤を構築。アプリとSNSを連携させて、地域の情報格差を埋めることに集中した。</div>
-                <div class="proj-stack">
-                    <span>WordPress</span>
-                    <span>Firebase</span>
-                    <span>Android</span>
-                </div>
-            </div>
-            <div class="proj">
-                <div class="proj-name">openpilot<br>日本環境最適化</div>
-                <div class="proj-desc">comma.ai社のオープンソース自動運転プロジェクトに参加。左側通行・急カーブなど、日本固有の道路環境に対応するためのソフトウェア最適化を担当。</div>
-                <div class="proj-stack">
-                    <span>Java</span>
-                    <span>OpenCV</span>
-                    <span>OSS</span>
-                </div>
-            </div>
-        </div>
-    </section>
+        <h3 class="p-h3">基本情報</h3>
+        <table class="p-table">
+          <tbody>
+            <tr><th scope="row">氏名</th><td>高橋 実来（たかはし みく）／ Miku Takahashi</td></tr>
+            <tr><th scope="row">所属</th><td>筑波大学 情報学群</td></tr>
+            <tr><th scope="row">専門領域</th><td>情報学、情報セキュリティ、知識情報・図書館学、防災・減災</td></tr>
+            <tr><th scope="row">関心分野</th><td>情報と社会の関わり、医療情報、地域の情報格差の是正</td></tr>
+          </tbody>
+        </table>
+      </section>
 
-    <section class="sect" id="skills">
-        <div class="sect-head reveal">
-            <span class="sect-num">04</span>
-            <h2 class="sect-title">Skills &amp; Qualifications</h2>
-        </div>
-        <div class="skills-grid reveal">
-            <div class="skill-group">
-                <h4>Languages / Frameworks</h4>
-                <ul>
-                    <li>Java</li>
-                    <li>Python</li>
-                    <li>PHP</li>
-                    <li>C#</li>
-                    <li>JavaScript</li>
-                    <li>HTML / CSS</li>
-                    <li>Android (Kotlin)</li>
+      <!-- 2. 経歴 -->
+      <section class="p-section" id="career">
+        <h2 class="p-h2">2. 経歴</h2>
+        <p>年ごとの主な活動と、外部からの評価・受賞は次のとおりです。</p>
+        <table class="p-table p-table--year">
+          <caption class="p-h3" style="text-align:left;">年表</caption>
+          <tbody>
+            <tr>
+              <th scope="row">2012年 – 2020年</th>
+              <td>
+                <strong>探求心の芽生え</strong><br>
+                震災をきっかけに防災へ関心を持つ。Minecraftサーバーの構築・運営を通じてプログラミングとコミュニティ運営を覚える。学級委員長や図書委員長も経験。
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2021年</th>
+              <td>
+                <strong>技術と社会実装</strong><br>
+                SSH指定中高一貫校に入学し、科学部の研究統括リーダーに就任。株式会社GIRONでアプリケーションエンジニアとして勤務開始。
+                <ul class="p-list">
+                  <li>静岡県ジュニアプログラミングコンテスト 優秀賞</li>
+                  <li>SIerロボットアイデア甲子園 全国大会優秀賞</li>
                 </ul>
-            </div>
-            <div class="skill-group">
-                <h4>Infra / Tools</h4>
-                <ul>
-                    <li>AWS</li>
-                    <li>Firebase</li>
-                    <li>Docker</li>
-                    <li>OpenCV</li>
-                    <li>Figma</li>
-                    <li>Premiere Pro</li>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2022年</th>
+              <td>
+                <strong>外部からの評価</strong><br>
+                国立研究開発法人情報通信研究機構（NICT）のSecHack365に合格。総務省 異能vationアワードにノミネート。自分のアイデアや技術が外の世界で通用する手応えを得た年。
+                <ul class="p-list">
+                  <li>SecHack365 合格認定</li>
+                  <li>静岡県児童生徒研究発表会 受賞</li>
                 </ul>
-            </div>
-            <div class="skill-group">
-                <h4>Certifications</h4>
-                <ul>
-                    <li>防災士</li>
-                    <li>総務省・NICT指定 サイバーセキュリティイノベーター</li>
-                    <li>日本化粧品検定 3級</li>
-                    <li>化粧品成分検定 3級</li>
-                    <li>色彩士検定 4級</li>
-                    <li>実用マナー検定 準3級</li>
-                    <li>日本フェムテック協会認定資格</li>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2023年</th>
+              <td>
+                <strong>教える側になる</strong><br>
+                SecHack365修了後、非常勤講師としてUI/UX・表現技法の講義を担当。台湾国家実験研究院CTFでも入賞し、国際的な場での経験を積む。
+                <ul class="p-list">
+                  <li>SecHack365 修了・非常勤講師</li>
+                  <li>台湾CTF 入賞</li>
                 </ul>
-            </div>
-        </div>
-    </section>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2024年 – 現在</th>
+              <td>
+                <strong>大学と実務の往復</strong><br>
+                筑波大学 情報学群に進学。山口大学のAKATSUKIプロジェクトに非常勤職員として参加しつつ、スターバックスでバリスタとしても勤務。
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">今後の予定</th>
+              <td>
+                <strong>次のフェーズ</strong><br>
+                筑波大学附属病院との共同研究に着手。GMOに学生エンジニアとして参画予定。知識情報・図書館学の領域から、情報と社会の関わりをより深く掘り下げていく。
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
-    <section class="game-sect" id="game">
-        <div class="sect-head reveal">
-            <span class="sect-num">05</span>
-            <h2 class="sect-title">Mini Game</h2>
-        </div>
-        <div class="game-container reveal">
-            <div class="game-canvas-wrap">
-                <canvas id="gameCanvas"></canvas>
-            </div>
-            <div class="game-hud">
-                <div class="game-score" id="gameScore">SCORE: 0</div>
-                <button class="game-btn" id="gameRestart">RESTART</button>
-            </div>
-            <div class="game-info">シールド（バー）を左右に動かして落下するパケットをキャッチ。<br>赤いマルウェアを避けろ！</div>
-        </div>
-    </section>
-</main>
+      <!-- 3. 主な取組・実績 -->
+      <section class="p-section" id="projects">
+        <h2 class="p-h2">3. 主な取組・実績</h2>
+        <p>社会課題の解決を目的として取り組んだ、主なプロジェクトを掲載しています。</p>
 
-<footer class="foot">
-    <p class="foot-msg">
-        誰もが正しい情報にアクセスできる、<br>安全な社会の実現を目指して。
-    </p>
-    <div class="foot-right">
-        <a href="mailto:japanappnext@gmail.com" class="foot-contact">CONTACT</a>
-        <span class="foot-copy">&copy; 2026 Miku Takahashi</span>
+        <div class="p-item">
+          <h3 class="p-item__title">オープンソース電子カルテシステム</h3>
+          <p class="p-item__body">
+            医療インフラが十分でない地域向けの電子カルテです。発展途上国の無医村地域で試験導入を開始しています。医療情報の格差をなくすことを目標としています。
+          </p>
+          <dl class="p-item__meta">
+            <dt>使用技術</dt>
+            <dd>Java ／ MySQL ／ AWS</dd>
+          </dl>
+        </div>
+
+        <div class="p-item">
+          <h3 class="p-item__title">静岡県コロナ対策情報基盤「シズスマ」</h3>
+          <p class="p-item__body">
+            新型コロナウイルス感染症の流行初期に、行政に先んじて情報発信基盤を構築しました。アプリとSNSを連携させ、地域の情報格差を埋めることに注力しました。
+          </p>
+          <dl class="p-item__meta">
+            <dt>使用技術</dt>
+            <dd>WordPress ／ Firebase ／ Android</dd>
+          </dl>
+        </div>
+
+        <div class="p-item">
+          <h3 class="p-item__title">openpilot 日本環境最適化</h3>
+          <p class="p-item__body">
+            comma.ai社のオープンソース自動運転プロジェクトに参加しました。左側通行・急カーブなど、日本固有の道路環境に対応するためのソフトウェア最適化を担当しています。
+          </p>
+          <dl class="p-item__meta">
+            <dt>使用技術</dt>
+            <dd>Java ／ OpenCV ／ OSS</dd>
+          </dl>
+        </div>
+      </section>
+
+      <!-- 4. 技術・資格 -->
+      <section class="p-section" id="skills">
+        <h2 class="p-h2">4. 技術・資格</h2>
+
+        <h3 class="p-h3">技術</h3>
+        <table class="p-table">
+          <tbody>
+            <tr>
+              <th scope="row">言語・フレームワーク</th>
+              <td>Java、Python、PHP、C#、JavaScript、HTML／CSS、Android（Kotlin）</td>
+            </tr>
+            <tr>
+              <th scope="row">インフラ・ツール</th>
+              <td>AWS、Firebase、Docker、OpenCV、Figma、Premiere Pro</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="p-h3">資格</h3>
+        <table class="p-table">
+          <tbody>
+            <tr><th scope="row">防災</th><td>防災士</td></tr>
+            <tr><th scope="row">情報セキュリティ</th><td>総務省・NICT指定 サイバーセキュリティイノベーター</td></tr>
+            <tr><th scope="row">化粧品・色彩</th><td>日本化粧品検定 3級、化粧品成分検定 3級、色彩士検定 4級</td></tr>
+            <tr><th scope="row">その他</th><td>実用マナー検定 準3級、日本フェムテック協会認定資格</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 5. お問い合わせ -->
+      <section class="p-section" id="contact">
+        <h2 class="p-h2">5. お問い合わせ</h2>
+        <p>取材、講演、共同研究、業務のご依頼などは、下記の連絡先までご連絡ください。</p>
+        <div class="p-contact">
+          <dl>
+            <dt>電子メール</dt>
+            <dd><a href="mailto:info@newnet.jp">info@newnet.jp</a></dd>
+            <dt>受付内容</dt>
+            <dd>取材・執筆・講演のご依頼、共同研究に関するご相談、開発業務に関するお問い合わせ</dd>
+            <dt>ご連絡にあたって</dt>
+            <dd>内容により、回答までにお時間をいただく場合があります。あらかじめご了承ください。</dd>
+          </dl>
+        </div>
+      </section>
+
+      <p class="p-updated">最終更新日：2026年8月1日</p>
+    </main>
+
+  </div>
+</div>
+
+<!-- ページ上部へ -->
+<div class="p-pagetop">
+  <div class="l-inner"><a href="#main">このページの先頭へ戻る</a></div>
+</div>
+
+<!-- フッター -->
+<footer class="l-footer">
+  <div class="l-inner">
+    <div class="p-footer__grid">
+      <div>
+        <p class="p-footer__name">高橋 実来（Miku Takahashi）</p>
+        <address class="p-footer__addr">
+          筑波大学 情報学群<br>
+          電子メール：<a href="mailto:info@newnet.jp">info@newnet.jp</a>
+        </address>
+      </div>
+      <ul class="p-footer__links">
+        <li><a href="#about">プロフィール</a></li>
+        <li><a href="#career">経歴</a></li>
+        <li><a href="#projects">主な取組・実績</a></li>
+        <li><a href="#skills">技術・資格</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
     </div>
+  </div>
+  <div class="p-copyright">
+    <div class="l-inner">© 2026 Miku Takahashi</div>
+  </div>
 </footer>
 
 <script>
-(function(){
+(function () {
+  var html = document.documentElement;
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.p-utility__btn'));
+  var sizes = { m: '16px', l: '18px', xl: '20px' };
 
-    var themeBtn = document.getElementById('themeToggle');
-    var savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    themeBtn.addEventListener('click', function(){
-        var current = document.documentElement.getAttribute('data-theme');
-        var next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
+  function apply(key) {
+    html.style.setProperty('--base-size', sizes[key] || sizes.m);
+    buttons.forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-fs') === key));
     });
+  }
 
-    var cv = document.getElementById('heroCanvas');
-    var ctx = cv.getContext('2d');
-    var w, h, pts = [];
-    var NUM = 60;
-
-    function resize(){
-        w = cv.width = cv.offsetWidth;
-        h = cv.height = cv.offsetHeight;
-    }
-
-    function initPts(){
-        pts = [];
-        for(var i = 0; i < NUM; i++){
-            pts.push({
-                x: Math.random() * w,
-                y: Math.random() * h,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3,
-                r: Math.random() * 1.2 + 0.3
-            });
-        }
-    }
-
-    function draw(){
-        ctx.clearRect(0, 0, w, h);
-        var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        var dotColor = isLight ? 'rgba(60,60,80,0.3)' : 'rgba(200,201,210,0.25)';
-
-        for(var i = 0; i < pts.length; i++){
-            var p = pts[i];
-            p.x += p.vx;
-            p.y += p.vy;
-            if(p.x < 0) p.x = w;
-            if(p.x > w) p.x = 0;
-            if(p.y < 0) p.y = h;
-            if(p.y > h) p.y = 0;
-
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = dotColor;
-            ctx.fill();
-
-            for(var j = i + 1; j < pts.length; j++){
-                var q = pts[j];
-                var dx = p.x - q.x;
-                var dy = p.y - q.y;
-                var dist = Math.sqrt(dx * dx + dy * dy);
-                if(dist < 140){
-                    ctx.beginPath();
-                    ctx.moveTo(p.x, p.y);
-                    ctx.lineTo(q.x, q.y);
-                    var lineAlpha = (1 - dist / 140) * (isLight ? 0.15 : 0.1);
-                    ctx.strokeStyle = 'rgba(110,86,207,' + lineAlpha + ')';
-                    ctx.lineWidth = 0.5;
-                    ctx.stroke();
-                }
-            }
-        }
-
-        requestAnimationFrame(draw);
-    }
-
-    resize();
-    initPts();
-    draw();
-    window.addEventListener('resize', function(){ resize(); initPts(); });
-
-    var isMobile = window.innerWidth <= 800;
-
-    if(isMobile){
-        var heroDesc = document.getElementById('heroDesc');
-        var heroTapHint = document.getElementById('heroTapHint');
-        var originalHTML = heroDesc.innerHTML;
-        var lines = originalHTML.split(/<br\s*\/?>/i);
-        var tapIndex = 0;
-
-        heroDesc.innerHTML = '';
-        heroDesc.style.opacity = '1';
-        heroDesc.style.animation = 'none';
-
-        var lineEls = [];
-        lines.forEach(function(line, li){
-            var span = document.createElement('span');
-            span.className = 'type-line';
-            var chars = line.trim().split('');
-            chars.forEach(function(ch){
-                var c = document.createElement('span');
-                c.className = 'type-char';
-                c.textContent = ch;
-                span.appendChild(c);
-            });
-            heroDesc.appendChild(span);
-            if(li < lines.length - 1){
-                heroDesc.appendChild(document.createElement('br'));
-            }
-            lineEls.push(span);
-        });
-
-        function revealLine(lineIndex){
-            if(lineIndex >= lineEls.length) return;
-            var chars = lineEls[lineIndex].querySelectorAll('.type-char');
-            chars.forEach(function(ch, ci){
-                setTimeout(function(){
-                    ch.classList.add('is-typed');
-                }, ci * 30);
-            });
-        }
-
-        var hero = document.querySelector('.hero');
-        hero.addEventListener('click', function(e){
-            if(e.target.closest('.nav') || e.target.closest('a')) return;
-            if(tapIndex < lineEls.length){
-                revealLine(tapIndex);
-                tapIndex++;
-                if(tapIndex >= lineEls.length){
-                    heroTapHint.style.display = 'none';
-                }
-            }
-        });
-    }
-
-    var items = document.querySelectorAll('.reveal, .tl-item, .proj');
-    var obs = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-            if(e.isIntersecting){
-                e.target.classList.add('is-vis');
-                obs.unobserve(e.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    items.forEach(function(el){ obs.observe(el); });
-
-    var nav = document.querySelector('.nav');
-    window.addEventListener('scroll', function(){
-        if(window.scrollY > 80){
-            nav.style.background = getComputedStyle(document.documentElement).getPropertyValue('--c-nav-bg-scroll');
-        } else {
-            nav.style.background = getComputedStyle(document.documentElement).getPropertyValue('--c-nav-bg');
-        }
-    }, { passive: true });
-
-    var gcv = document.getElementById('gameCanvas');
-    var gctx = gcv.getContext('2d');
-    var gw, gh;
-    var scoreEl = document.getElementById('gameScore');
-    var restartBtn = document.getElementById('gameRestart');
-
-    var paddle = { w: 80, h: 12, x: 0, speed: 0 };
-    var packets = [];
-    var score = 0;
-    var lives = 3;
-    var gameOver = false;
-    var spawnTimer = 0;
-    var spawnInterval = 60;
-    var difficulty = 1;
-    var frameCount = 0;
-    var mouseX = -1;
-    var touchActive = false;
-
-    function resizeGame(){
-        var wrap = gcv.parentElement;
-        var rect = wrap.getBoundingClientRect();
-        gcv.width = gw = Math.round(rect.width);
-        gcv.height = gh = Math.round(rect.height);
-        paddle.x = gw / 2 - paddle.w / 2;
-    }
-
-    function spawnPacket(){
-        var isMalware = Math.random() < 0.25;
-        var size = isMalware ? 10 : 8;
-        packets.push({
-            x: Math.random() * (gw - 20) + 10,
-            y: -10,
-            vy: (1.2 + Math.random() * 1.5) * difficulty,
-            size: size,
-            malware: isMalware
-        });
-    }
-
-    function resetGame(){
-        packets = [];
-        score = 0;
-        lives = 3;
-        gameOver = false;
-        spawnTimer = 0;
-        difficulty = 1;
-        frameCount = 0;
-        paddle.x = gw / 2 - paddle.w / 2;
-        scoreEl.textContent = 'SCORE: 0';
-    }
-
-    function updateGame(){
-        if(gameOver) return;
-
-        frameCount++;
-        if(frameCount % 600 === 0){
-            difficulty += 0.15;
-            if(spawnInterval > 25) spawnInterval -= 3;
-        }
-
-        spawnTimer++;
-        if(spawnTimer >= spawnInterval){
-            spawnPacket();
-            spawnTimer = 0;
-        }
-
-        var paddleY = gh - 30;
-
-        for(var i = packets.length - 1; i >= 0; i--){
-            var pk = packets[i];
-            pk.y += pk.vy;
-
-            if(pk.y + pk.size >= paddleY && pk.y + pk.size <= paddleY + paddle.h + 4 &&
-               pk.x >= paddle.x && pk.x <= paddle.x + paddle.w){
-                if(pk.malware){
-                    lives--;
-                    if(lives <= 0) gameOver = true;
-                } else {
-                    score += 10;
-                }
-                packets.splice(i, 1);
-                continue;
-            }
-
-            if(pk.y > gh + 10){
-                if(!pk.malware){
-                    lives--;
-                    if(lives <= 0) gameOver = true;
-                }
-                packets.splice(i, 1);
-            }
-        }
-
-        scoreEl.textContent = 'SCORE: ' + score + '  ♥'.repeat(lives);
-    }
-
-    function drawGame(){
-        var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        gctx.clearRect(0, 0, gw, gh);
-
-        var paddleY = gh - 30;
-        gctx.beginPath();
-        gctx.roundRect(paddle.x, paddleY, paddle.w, paddle.h, 4);
-        gctx.fillStyle = isLight ? '#6e56cf' : '#7c66dc';
-        gctx.fill();
-
-        gctx.shadowBlur = 12;
-        gctx.shadowColor = 'rgba(110,86,207,0.4)';
-        gctx.fill();
-        gctx.shadowBlur = 0;
-        gctx.shadowColor = 'transparent';
-
-        for(var i = 0; i < packets.length; i++){
-            var pk = packets[i];
-            gctx.beginPath();
-            if(pk.malware){
-                gctx.arc(pk.x, pk.y, pk.size, 0, Math.PI * 2);
-                gctx.fillStyle = isLight ? '#d03035' : '#e5484d';
-                gctx.fill();
-                gctx.shadowBlur = 8;
-                gctx.shadowColor = 'rgba(229,72,77,0.5)';
-                gctx.fill();
-                gctx.shadowBlur = 0;
-                gctx.shadowColor = 'transparent';
-            } else {
-                gctx.arc(pk.x, pk.y, pk.size, 0, Math.PI * 2);
-                gctx.fillStyle = isLight ? '#1a9e94' : '#3dd6c8';
-                gctx.fill();
-                gctx.shadowBlur = 6;
-                gctx.shadowColor = 'rgba(61,214,200,0.3)';
-                gctx.fill();
-                gctx.shadowBlur = 0;
-                gctx.shadowColor = 'transparent';
-            }
-        }
-
-        if(gameOver){
-            gctx.fillStyle = isLight ? 'rgba(244,244,247,0.85)' : 'rgba(6,7,11,0.85)';
-            gctx.fillRect(0, 0, gw, gh);
-            gctx.fillStyle = isLight ? '#2a2a3a' : '#fff';
-            gctx.font = '700 24px Inter, sans-serif';
-            gctx.textAlign = 'center';
-            gctx.fillText('GAME OVER', gw / 2, gh / 2 - 16);
-            gctx.fillStyle = isLight ? '#5c5c72' : '#717286';
-            gctx.font = '14px "JetBrains Mono", monospace';
-            gctx.fillText('SCORE: ' + score, gw / 2, gh / 2 + 16);
-            gctx.fillText('TAP RESTART TO PLAY AGAIN', gw / 2, gh / 2 + 44);
-        }
-    }
-
-    function gameLoop(){
-        updateGame();
-        drawGame();
-        requestAnimationFrame(gameLoop);
-    }
-
-    resizeGame();
-    window.addEventListener('resize', resizeGame);
-
-    gcv.addEventListener('mousemove', function(e){
-        var rect = gcv.getBoundingClientRect();
-        var mx = (e.clientX - rect.left) * (gw / rect.width);
-        paddle.x = mx - paddle.w / 2;
-        if(paddle.x < 0) paddle.x = 0;
-        if(paddle.x > gw - paddle.w) paddle.x = gw - paddle.w;
-    });
-
-    gcv.addEventListener('touchmove', function(e){
-        e.preventDefault();
-        var rect = gcv.getBoundingClientRect();
-        var tx = (e.touches[0].clientX - rect.left) * (gw / rect.width);
-        paddle.x = tx - paddle.w / 2;
-        if(paddle.x < 0) paddle.x = 0;
-        if(paddle.x > gw - paddle.w) paddle.x = gw - paddle.w;
-    }, { passive: false });
-
-    restartBtn.addEventListener('click', resetGame);
-
-    gameLoop();
-
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.getAttribute('data-fs')); });
+  });
 })();
 </script>
-
 </body>
 </html>
