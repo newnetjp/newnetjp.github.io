@@ -148,20 +148,6 @@ button:focus-visible{
 .l-gnav a:hover{ background:var(--navy-dark); text-decoration:underline; }
 
 /* ============================================================
-   パンくず
-   ============================================================ */
-.p-breadcrumb{
-  font-size:.8125rem; color:var(--text-sub);
-  border-bottom:1px solid var(--border);
-  background:#fff;
-}
-.p-breadcrumb ol{
-  list-style:none; margin:0; padding:.6rem 0;
-  display:flex; flex-wrap:wrap; gap:.35rem;
-}
-.p-breadcrumb li + li::before{ content:"＞"; margin-right:.35rem; }
-
-/* ============================================================
    本文レイアウト（2カラム）
    ============================================================ */
 .l-body{ padding-block:2rem 3rem; }
@@ -404,15 +390,6 @@ button:focus-visible{
   </div>
 </nav>
 
-<!-- パンくず -->
-<nav class="p-breadcrumb" aria-label="パンくずリスト">
-  <div class="l-inner">
-    <ol>
-      <li><a href="#">ホーム</a></li>
-      <li aria-current="page">高橋 実来について</li>
-    </ol>
-  </div>
-</nav>
 
 <div class="l-body">
   <div class="l-inner l-columns">
