@@ -12,7 +12,7 @@
       <link>https://newnet.jp/blog/claude-code-system-prompt/</link>
       <guid isPermaLink="true">https://newnet.jp/blog/claude-code-system-prompt/</guid>
       <pubDate>Tue, 17 Nov 2026 00:00:00 +0900</pubDate>
-      <description>Claude Code は、頼んでもパスワードを入力しません。その理由は、会話の前に受け取っているシステムプロンプトに書いてありました。本人（モデル）に書き写してもらった写しから、指示の出どころの区別、操作の3分類、確認と報告のルールなど、権限設計にかかわる部分を読み解きます。</description>
+      <description>Claude Code のシステムプロンプトを本人に書き出させて読みました。頼んでもパスワードを入力しない理由、プロンプトインジェクション対策、操作の3分類など、権限設計にかかわる部分を日本語で解説します。</description>
       <category>Claude Code</category>
       <category>システムプロンプト</category>
       <category>AI</category>

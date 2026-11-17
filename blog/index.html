@@ -22,6 +22,29 @@
 <meta name="twitter:description" content="高橋実来（たかはし みく / Miku Takahashi）のブログ。情報学・セキュリティや、使っている道具について書いた記事の一覧です。">
 <link rel="stylesheet" href="blog.css">
 <link rel="alternate" type="application/rss+xml" title="newnet.jp ブログ" href="feed.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "newnet.jp ブログ",
+  "url": "https://newnet.jp/blog/",
+  "inLanguage": "ja",
+  "author": {
+    "@id": "https://newnet.jp/#person"
+  },
+  "isPartOf": {
+    "@id": "https://newnet.jp/#website"
+  },
+  "blogPost": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Claude Code はなぜパスワードを打たないのか ― システムプロンプトから読む権限設計",
+      "url": "https://newnet.jp/blog/claude-code-system-prompt/",
+      "datePublished": "2026-11-17"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -47,7 +70,7 @@
           <ul class="p-tags" aria-label="タグ">
             <li>Claude Code</li><li>システムプロンプト</li><li>AI</li><li>LLM</li>
           </ul>
-          <p class="p-post__desc">Claude Code は、頼んでもパスワードを入力しません。その理由は、会話の前に受け取っているシステムプロンプトに書いてありました。本人（モデル）に書き写してもらった写しから、指示の出どころの区別、操作の3分類、確認と報告のルールなど、権限設計にかかわる部分を読み解きます。</p>
+          <p class="p-post__desc">Claude Code のシステムプロンプトを本人に書き出させて読みました。頼んでもパスワードを入力しない理由、プロンプトインジェクション対策、操作の3分類など、権限設計にかかわる部分を日本語で解説します。</p>
         </li>
       </ul>
       <aside class="p-cta">
