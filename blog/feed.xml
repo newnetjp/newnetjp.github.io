@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>newnet.jp ブログ</title>
+    <link>https://newnet.jp/blog/</link>
+    <description>高橋 実来（Miku Takahashi）のブログ。情報学・セキュリティや、使っている道具について書いた記事。</description>
+    <language>ja</language>
+    <lastBuildDate>Tue, 17 Nov 2026 00:00:00 +0900</lastBuildDate>
+    <atom:link href="https://newnet.jp/blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Claude Code はなぜパスワードを打たないのか ― システムプロンプトから読む権限設計</title>
+      <link>https://newnet.jp/blog/claude-code-system-prompt/</link>
+      <guid isPermaLink="true">https://newnet.jp/blog/claude-code-system-prompt/</guid>
+      <pubDate>Tue, 17 Nov 2026 00:00:00 +0900</pubDate>
+      <description>Claude Code は、頼んでもパスワードを入力しません。その理由は、会話の前に受け取っているシステムプロンプトに書いてありました。本人（モデル）に書き写してもらった写しから、指示の出どころの区別、操作の3分類、確認と報告のルールなど、権限設計にかかわる部分を読み解きます。</description>
+      <category>Claude Code</category>
+      <category>システムプロンプト</category>
+      <category>AI</category>
+      <category>LLM</category>
+    </item>
+  </channel>
+</rss>

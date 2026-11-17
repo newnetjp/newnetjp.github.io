@@ -1,0 +1,151 @@
+/* newnet.jp ブログ共通スタイル（技術記事サイト風: 薄いグレーの地に白いカード、緑のアクセント）
+   ダーク表示には対応しない。背景色と文字色を明示して崩れないようにしている。 */
+:root{
+  --accent:#3E9B2F;       /* アクセントの緑 */
+  --accent-dark:#2C7420;  /* リンク・濃い緑 */
+  --accent-pale:#EEF6EA;  /* 緑の淡色面 */
+  --text:#2B2B2B;
+  --text-sub:#6A6F73;
+  --border:#E2E4E6;
+  --bg:#ECEFEC;
+  --card:#FFFFFF;
+  --code-bg:#F0F2F1;
+  --focus:#B34700;
+  color-scheme:light;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic Medium","Yu Gothic","Meiryo","Noto Sans JP",sans-serif;
+  font-size:16px;
+  line-height:1.9;
+  overflow-wrap:anywhere;
+}
+a{ color:var(--accent-dark); }
+a:hover{ text-decoration:none; }
+a:focus-visible,summary:focus-visible{ outline:3px solid var(--focus); outline-offset:2px; }
+
+.l-inner{ width:100%; max-width:1120px; margin-inline:auto; padding-inline:16px; }
+
+.p-skip{
+  position:absolute; left:0; top:0; transform:translateY(-200%);
+  background:var(--accent-dark); color:#fff; padding:.6rem 1rem; z-index:100;
+}
+.p-skip:focus{ transform:translateY(0); }
+
+/* ヘッダー */
+.l-header{ background:var(--card); border-bottom:1px solid var(--border); }
+.l-header .l-inner{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+  gap:.5rem 1rem; min-height:3.5rem; padding-block:.5rem;
+}
+.p-brand{ color:var(--text); text-decoration:none; font-weight:700; font-size:1.125rem; }
+.p-brand__sub{ color:var(--accent); margin-left:.35em; }
+.p-header__top{ font-size:.875rem; }
+
+/* レイアウト */
+.l-body{ padding-block:1.5rem 3rem; }
+.p-breadcrumb{ margin:0 0 1rem; font-size:.8125rem; color:var(--text-sub); }
+.l-layout{ display:flex; flex-direction:column; gap:1.25rem; }
+.l-side{ order:-1; }
+@media (min-width:960px){
+  .l-layout{ display:grid; grid-template-columns:minmax(0,1fr) 16rem; gap:1.5rem; align-items:start; }
+  .l-side{ order:0; position:sticky; top:1rem; }
+}
+
+/* カード */
+.p-card{
+  background:var(--card);
+  border-radius:8px;
+  padding:1.25rem 1rem;
+}
+@media (min-width:768px){ .p-card{ padding:2rem 2.5rem; } }
+
+/* 記事ヘッダー */
+.p-postmeta{ margin:0 0 .5rem; font-size:.8125rem; color:var(--text-sub); }
+.p-postmeta span + span{ margin-left:1em; }
+.p-article h1{ margin:0 0 .75rem; font-size:1.625rem; line-height:1.5; }
+@media (min-width:768px){ .p-article h1{ font-size:1.875rem; } }
+.p-tags{ list-style:none; margin:0 0 1rem; padding:0; display:flex; flex-wrap:wrap; gap:.4rem; }
+.p-tags li{
+  font-size:.75rem; line-height:1.6; padding:.1rem .6rem;
+  background:var(--accent-pale); color:var(--accent-dark);
+  border-radius:4px;
+}
+.p-author{
+  margin:0 0 2rem; padding-bottom:1rem; border-bottom:1px solid var(--border);
+  font-size:.875rem; color:var(--text-sub);
+}
+.p-author strong{ color:var(--text); }
+
+/* 本文 */
+.p-article h2{
+  margin:2.75rem 0 1rem; padding-bottom:.4rem;
+  border-bottom:1px solid var(--border);
+  font-size:1.375rem; line-height:1.5;
+}
+.p-article h3{
+  margin:2.25rem 0 .75rem;
+  color:var(--accent-dark);
+  font-size:1.1875rem; font-weight:700; line-height:1.6;
+}
+.p-article h2,.p-article h3{ scroll-margin-top:1rem; }
+.p-article p{ margin:0 0 1rem; }
+.p-article ul,.p-article ol{ margin:0 0 1rem; padding-left:1.5rem; }
+.p-article li{ margin-bottom:.35rem; }
+.p-article blockquote{
+  margin:0 0 1rem; padding:.5rem 1rem;
+  color:#4F5458; background:var(--code-bg);
+  font-family:Menlo,Consolas,monospace; font-size:.875rem; line-height:1.7;
+}
+.p-article code{
+  font-family:Menlo,Consolas,monospace; font-size:.875em;
+  background:var(--code-bg); border-radius:3px; padding:0 .25em;
+}
+.p-note{
+  margin:0 0 1.5rem; padding:.9rem 1rem;
+  background:#FFF8DC; border-radius:6px;
+}
+.p-note__title{ margin:0 0 .4rem !important; font-weight:700; }
+.p-note ul{ margin-bottom:0; }
+.p-colophon{
+  margin:2.5rem 0 0 !important; padding-top:1rem; border-top:1px solid var(--border);
+  font-size:.875rem; color:var(--text-sub);
+}
+
+/* 目次 */
+.p-toc{ padding:1rem; }
+.p-toc summary{ font-weight:700; cursor:pointer; }
+.p-toc ol{ list-style:none; margin:.5rem 0 0; padding:0; font-size:.875rem; line-height:1.6; }
+.p-toc li{ margin:.4rem 0; }
+.p-toc li li{ padding-left:1em; }
+.p-toc a{ color:var(--text); text-decoration:none; }
+.p-toc a:hover{ color:var(--accent-dark); text-decoration:underline; }
+
+/* 記事一覧 */
+.p-listtitle{ margin:0 0 1rem; font-size:1.375rem; }
+.p-postlist{ list-style:none; margin:0; padding:0; display:grid; gap:1rem; }
+.p-post__title{ margin:0 0 .5rem; font-size:1.1875rem; line-height:1.6; }
+.p-post__title a{ color:var(--text); text-decoration:none; }
+.p-post__title a:hover{ color:var(--accent-dark); text-decoration:underline; }
+.p-post__desc{ margin:0; font-size:.9375rem; color:#4F5458; }
+.p-post .p-tags{ margin:0 0 .75rem; }
+
+/* フッター */
+.l-footer{ background:var(--card); border-top:1px solid var(--border); color:var(--text-sub); font-size:.8125rem; }
+.l-footer .l-inner{ padding-block:1.25rem; display:flex; flex-wrap:wrap; gap:.5rem 1.5rem; justify-content:space-between; }
+.l-footer p{ margin:0; }
+.p-article .p-tags{ padding-left:0; }
+
+/* 相談の案内（控えめに） */
+.p-cta{
+  margin:2rem 0 0; padding:.9rem 1rem;
+  background:var(--accent-pale); border-radius:6px;
+  font-size:.9375rem;
+}
+.p-cta p{ margin:0 !important; }
+.p-postlist + .p-cta{ margin-top:1.5rem; }
