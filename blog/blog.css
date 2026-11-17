@@ -156,3 +156,4 @@ a:focus-visible,summary:focus-visible{ outline:3px solid var(--focus); outline-o
 .p-share ul{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:.5rem; }
 .p-share a{ display:inline-block; padding:.35rem .9rem; border-radius:999px; background:var(--accent-dark); color:#fff; font-weight:700; text-decoration:none; }
 .p-share a:hover{ background:var(--accent); }
+.p-share--top{ margin:0 0 1rem; }
