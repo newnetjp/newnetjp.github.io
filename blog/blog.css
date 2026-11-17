@@ -149,3 +149,10 @@ a:focus-visible,summary:focus-visible{ outline:3px solid var(--focus); outline-o
 }
 .p-cta p{ margin:0 !important; }
 .p-postlist + .p-cta{ margin-top:1.5rem; }
+
+/* 共有リンク */
+.p-share{ margin:2.5rem 0 0; display:flex; flex-wrap:wrap; align-items:center; gap:.5rem .75rem; font-size:.875rem; }
+.p-share__label{ color:var(--text-sub); }
+.p-share ul{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:.5rem; }
+.p-share a{ display:inline-block; padding:.35rem .9rem; border-radius:999px; background:var(--accent-dark); color:#fff; font-weight:700; text-decoration:none; }
+.p-share a:hover{ background:var(--accent); }
